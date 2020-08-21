@@ -2,33 +2,39 @@ import random as rd
 from concurrent.futures import ThreadPoolExecutor
 
 
-def prompt(justDisplayTimeLeft):
-    if justDisplayTimeLeft != 0:
-        print('Too long, try again!')
+def prompt(just_display_time_left, greater= True):
+    if greater:
+        if just_display_time_left != 0:
+            print('Too long, try again!')
+        else:
+            print('Too long')
     else:
-        print('Too long')
+        if just_display_time_left != 0:
+            print('Too small, try again!')
+        else:
+            print('Too small')
 
 
 def guessingFuc():
     secret_number= rd.randint(1, 21)
     guess_count= 1
-    timeLeft= 5
+    time_left= 5
     while guess_count <= 5:
         try:
             guess= int(input('Guess: '))
-            justDisplayTimeLeft= timeLeft-1
+            just_display_time_left= time_left-1
             if guess > secret_number:
-                prompt(justDisplayTimeLeft)
+                prompt(just_display_time_left)
             elif guess < secret_number:                
-                prompt(justDisplayTimeLeft)
+                prompt(just_display_time_left, greater= False)
             else:
                 break
             guess_count += 1        
-            if justDisplayTimeLeft != 0:
-                print(f"Time left is {justDisplayTimeLeft}")
+            if just_display_time_left != 0:
+                print(f"Time left is {just_display_time_left}")
             else:
                 pass
-            timeLeft= timeLeft-1
+            time_left= time_left-1
         except ValueError:
             print('Invalid pin')
             break
