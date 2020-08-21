@@ -16,13 +16,14 @@ def prompt(just_display_time_left, greater=True):
 
 
 def guessingFuc():
-    secret_number = rd.randint(1, 21)
-    guess_count = 1
-    time_left = 5
-    while guess_count <= 5:
+    secret_number = rd.randint(1, 21)  # This is the secret number which is between 1-20
+    guess_count = 1  # Counting the guessing count
+    set_time = 5  # This is the number of time to guess (Which we can change and it will not affect the program)
+    time_left = set_time  # Time left to guess
+    while guess_count <= set_time:
         try:
-            guess= int(input('Guess: '))
-            just_display_time_left = time_left-1
+            guess = int(input('Guess: '))
+            just_display_time_left = time_left-1  # This is only useful for the prompt method and the time-left
             if guess > secret_number:
                 prompt(just_display_time_left)
             elif guess < secret_number:                
