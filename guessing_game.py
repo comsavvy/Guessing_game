@@ -26,7 +26,7 @@ def guessingFuc():
             if guess > secret_number:
                 prompt(just_display_time_left)
             elif guess < secret_number:                
-                prompt(just_display_time_left, greater= False)
+                prompt(just_display_time_left, greater=False)
             else:
                 break
             guess_count += 1        
