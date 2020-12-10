@@ -90,6 +90,10 @@ def main():
     """
         Game order of re-running falls here.
     """
+    print(f"Hello! " 
+        f"I have number between 1-20 \n"
+        f"Can you guess my number? \n"
+        f"Best of luck!")
     game_guessing()
     while True:
         play = input("Do you want to play again? [Y/N] ").capitalize().startswith('Y')
@@ -99,16 +103,5 @@ def main():
             break
 
 
-def game():
-    """
-        Guessing Game start here,
-    """
-    print(f"Hello! " 
-    f"I have number between 1-20 \n"
-    f"Can you guess my number? \n"
-    f"Best of luck!")
-    main()
-
-
 if __name__ == "__main__":
-    game()
+    main()
