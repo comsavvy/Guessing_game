@@ -17,14 +17,14 @@ def prompt(just_display_time_left: int, greater: bool=True):
         else:
             print('Too small')
 
-def prompt_timeleft(just_display_time_left: int):
+def prompt_timeleft(time: int):
     """
         Prompting the user time left for the guessing
     """
-    if just_display_time_left != 0:
-        print(f"Time left is {just_display_time_left}")
+    if time != 0:
+        print(f"Time left is {time}")
     else:
-            pass
+        pass
 
 def _to_continue():
     """
@@ -42,8 +42,8 @@ def guessingFuc():
         * Time of execution
     """
     secret_number = rd.randint(1, 21)  # This is the secret number which is between 1-20
-    guess_count = 1  # Counting the guessing count
     set_time = 5  # This is the number of time to guess (Which we can change and it will not affect the program)
+    guess_count = 1  # Counting the guessing count
     time_left = set_time  # Time left to guess
     while guess_count <= set_time:
         try:
@@ -57,7 +57,7 @@ def guessingFuc():
             else:
                 break            
             prompt_timeleft(just_display_time_left)
-            time_left = time_left-1
+            time_left -= 1
         except ValueError:
             print('Invalid pin')            
             if _to_continue():
@@ -65,20 +65,12 @@ def guessingFuc():
             else:
                 break
             prompt_timeleft(just_display_time_left)  
-            time_left = time_left-1
+            time_left -= 1
     if secret_number == guess:
         print('You Won!')
     else:        
         print(f'The secret number is {secret_number}'
         f'\nYou lose!\n')
-
-
-def rerun():
-    """
-        Threading the game here
-    """
-    with ThreadPoolExecutor(max_workers=2) as executor:
-        executor.submit(guessingFuc)
 
 
 def main():
