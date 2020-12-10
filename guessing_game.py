@@ -1,5 +1,17 @@
 import random as rd
+from functools import wraps
 from concurrent.futures import ThreadPoolExecutor
+
+
+def thread(func: object):
+    """
+        Threading the game here
+    """
+    @wraps(func)
+    def inner_func():
+        with ThreadPoolExecutor(max_workers=2) as executor:
+            executor.submit(func)
+    return inner_func
 
 
 def prompt(just_display_time_left: int, greater: bool=True):
@@ -10,12 +22,12 @@ def prompt(just_display_time_left: int, greater: bool=True):
         if just_display_time_left != 0:
             print('Too long, try again!')
         else:
-            print('Too long')
+            print(f'{"="*8}\nToo long\n{"="*8}\n')
     else:
         if just_display_time_left != 0:
             print('Too small, try again!')
         else:
-            print('Too small')
+            print(f'{"="*9}\nToo small\n{"="*9}\n')
 
 def prompt_timeleft(time: int):
     """
@@ -34,7 +46,8 @@ def _to_continue():
     return asn
 
 
-def guessingFuc():
+@thread
+def game_guessing():
     """
         GAME!\n
         This contains all the process used for the guessing game which include:
@@ -67,21 +80,21 @@ def guessingFuc():
             prompt_timeleft(just_display_time_left)  
             time_left -= 1
     if secret_number == guess:
-        print('You Won!')
+        print(f'{"="*8} You Won! {"="*8}\n')
     else:        
-        print(f'The secret number is {secret_number}'
-        f'\nYou lose!\n')
+        print(f'The secret number is {secret_number}\n'
+        f'\n{"="*9} You lose! {"="*9}\n')
 
 
 def main():
     """
         Game order of re-running falls here.
     """
-    rerun()
+    game_guessing()
     while True:
         play = input("Do you want to play again? [Y/N] ").capitalize().startswith('Y')
         if play:
-            rerun()
+            game_guessing()
         else:
             break
 
