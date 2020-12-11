@@ -1,16 +1,17 @@
 import random as rd
 from functools import wraps
 from concurrent.futures import ThreadPoolExecutor
+from typing import Tuple, Literal
 
 
-def thread(func: object):
+def thread(func):
     """
         Threading the game here
     """
     @wraps(func)
-    def inner_func():
+    def inner_func(*args: Tuple, **kwargs: int):
         with ThreadPoolExecutor(max_workers=2) as executor:
-            executor.submit(func)
+            executor.submit(func, *args, **kwargs)
     return inner_func
 
 
@@ -47,15 +48,15 @@ def _to_continue():
 
 
 @thread
-def game_guessing():
+def game_guessing(secretNo: Tuple=(1, 20), time: int=5) -> None:
     """
         GAME!\n
         This contains all the process used for the guessing game which include:
         * Secret Number
         * Time of execution
     """
-    secret_number = rd.randint(1, 21)  # This is the secret number which is between 1-20
-    set_time = 5  # This is the number of time to guess (Which we can change and it will not affect the program)
+    secret_number = rd.randint(*secretNo)  # This is the secret number which is between the specified number
+    set_time = time  # This is the number of times to guess (Which we can change and it will not affect the program)
     guess_count = 1  # Counting the guessing count
     time_left = set_time  # Time left to guess
     while guess_count <= set_time:
@@ -90,15 +91,17 @@ def main():
     """
         Game order of re-running falls here.
     """
+    secret_number = (1, 30) # Modifying the secret number
+    time = 7 #  Changing the time of guess
     print(f"Hello! " 
-        f"I have number between 1-20 \n"
+        f"I have number between {secret_number[0]}-{secret_number[1]} \n"
         f"Can you guess my number? \n"
-        f"Best of luck!")
-    game_guessing()
+        f"Best of luck!")    
+    game_guessing(secret_number, time)
     while True:
         play = input("Do you want to play again? [Y/N] ").capitalize().startswith('Y')
         if play:
-            game_guessing()
+            game_guessing(secret_number, time)
         else:
             break
 
