@@ -1,4 +1,4 @@
-# Guessing_game
+# Guessing game
 Another version of guessing game with ***Python*** from basic coding to advanced. 
 <br />
 
